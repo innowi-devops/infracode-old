@@ -1,13 +1,19 @@
+- name: check if node exporter exist
+  stat:
+    path: "{{ node_exporter_bin }}"
+  register: __check_node_exporter_present
+
+- name: check if node exporter exist
+  stat:
+    path: /etc/systemd/system/node_exporter.service
+  register: __check_service_present
+
 - name: Stop service node_exporter on debian, if running
   ansible.builtin.systemd:
     name: node_exporter
     state: stopped
     enabled: no
-
-- name: create an empty file if it doesn't exist
-  file:
-    path: /etc/systemd/system/node_exporter.service
-    state: touch
+  when: __check_service_present.stat.exists == true
 
 - name: clean service file
   file:
