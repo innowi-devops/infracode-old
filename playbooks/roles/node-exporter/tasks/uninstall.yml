@@ -24,3 +24,8 @@
     name: "{{ node_exporter_user }}"
     state: absent
     remove: yes
+
+- name: clean binary executable
+  file:
+    path: "{{ node_exporter_bin }}"
+    state: absent
