@@ -4,6 +4,11 @@
     state: stopped
     enabled: no
 
+- name: create an empty file if it doesn't exist
+  file:
+    path: /etc/systemd/system/node_exporter.service
+    state: touch
+
 - name: clean service file
   file:
     path: /etc/systemd/system/node_exporter.service
